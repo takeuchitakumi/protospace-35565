@@ -49,7 +49,8 @@ class PrototypesController < ApplicationController
   end
 
   def ensure_current_user
-    if current_user.id != params[:id].to_i
+    @prototype = Prototype.find(params[:id])
+    unless user_signed_in? && current_user.id == @prototype.user_id
       redirect_to action: :index
     end
   end
